@@ -23,5 +23,29 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script src="//code.tidio.co/9l6nxscodahzbianowjc7ehdwz8kpivn.js" async></script>
+    <style>
+      /* Position Tidio on the left side */
+      #tidio-chat-iframe {
+        left: 20px !important;
+        right: auto !important;
+      }
+      #tidio-chat {
+        left: 0 !important;
+        right: auto !important;
+      }
+    </style>
+    <script>
+      // Auto-open Tidio chat with a greeting when page loads
+      document.addEventListener('tidioChat-ready', function() {
+        setTimeout(function() {
+          if (window.tidioChatApi) {
+            window.tidioChatApi.open();
+            setTimeout(function() {
+              window.tidioChatApi.close();
+            }, 3000);
+          }
+        }, 2000);
+      });
+    </script>
   </body>
 </html>
