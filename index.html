@@ -24,13 +24,22 @@
     <script type="module" src="/src/main.tsx"></script>
     <script src="//code.tidio.co/9l6nxscodahzbianowjc7ehdwz8kpivn.js" async></script>
     <style>
-      /* Position Tidio on the left side */
-      #tidio-chat-iframe {
+      /* Position Tidio on the left side - more specific selectors */
+      #tidio-chat-iframe,
+      #tidio-chat-code iframe,
+      div[id^="tidio"] iframe {
         left: 20px !important;
         right: auto !important;
       }
-      #tidio-chat {
-        left: 0 !important;
+      #tidio-chat,
+      div[id^="tidio-chat"] {
+        left: 20px !important;
+        right: auto !important;
+      }
+      /* Position the button widget on left */
+      .tidio-button-wrapper,
+      .tidio-1wqvf2r {
+        left: 20px !important;
         right: auto !important;
       }
     </style>
