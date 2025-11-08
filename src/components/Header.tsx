@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react"; // 'X' is no longer needed here, Sheet handles it
+import { Link, useLocation } from "react-router-dom";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet"; // --- IMPORTS ADDED ---
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // This will control the Sheet
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,12 +22,86 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { name: "Home", href: "#home" },
-    { name: "Services", href: "#services" },
-    { name: "Packages", href: "#packages" },
-    { name: "About Us", href: "#about" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/#home" },
+    { name: "Services", href: "/#services" },
+    { name: "Packages", href: "/#packages" },
+    { name: "Blog", href: "/blog" },
+    { name: "About Us", href: "/#about" },
+    { name: "Contact", href: "/#contact" },
   ];
+
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // We still want to close the menu on click
+    setIsMobileMenuOpen(false); 
+
+    if (location.pathname === '/') {
+      e.preventDefault();
+      const targetId = href.split("#")[1];
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+    // If on /blog, let the link navigate normally
+  };
+
+  // --- Helper for Desktop Nav ---
+  const renderNavItem = (item: { name: string, href: string }) => {
+    const isBlogLink = item.href === '/blog';
+
+    if (isBlogLink) {
+      return (
+        <Link
+          key={item.name}
+          to={item.href}
+          className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          {item.name}
+        </Link>
+      );
+    }
+
+    return (
+      <a
+        key={item.name}
+        href={item.href}
+        className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
+        onClick={(e) => handleSmoothScroll(e, item.href)}
+      >
+        {item.name}
+      </a>
+    );
+  };
+
+  // --- Helper for Mobile Nav (links inside the Sheet) ---
+  const renderMobileNavItem = (item: { name: string, href: string }) => {
+    const isBlogLink = item.href === '/blog';
+
+    if (isBlogLink) {
+      return (
+        <Link
+          key={item.name}
+          to={item.href}
+          className="text-foreground hover:text-primary transition-colors duration-300 font-medium py-2 text-lg" // Made text larger
+          onClick={() => setIsMobileMenuOpen(false)} // Close menu on click
+        >
+          {item.name}
+        </Link>
+      );
+    }
+
+    return (
+      <a
+        key={item.name}
+        href={item.href}
+        className="text-foreground hover:text-primary transition-colors duration-300 font-medium py-2 text-lg" // Made text larger
+        onClick={(e) => handleSmoothScroll(e, item.href)} // handleSmoothScroll already closes menu
+      >
+        {item.name}
+      </a>
+    );
+  };
 
   return (
     <header
@@ -32,58 +113,60 @@ const Header = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold gradient-text">Apna Growth Media</h1>
+            <Link to="/" className="text-2xl font-bold gradient-text" onClick={(e) => handleSmoothScroll(e, '/#home')}>
+              Apna Growth Media
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
-              >
-                {item.name}
-              </a>
-            ))}
+            {navItems.map(renderNavItem)}
           </nav>
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button variant="glow" size="lg" className="rotating-border-glow animate-glow-pulse hover:scale-105 transition-all duration-300 hover:shadow-2xl" asChild>
+            <Button variant="glow" size="lg" asChild>
               <a href="#contact">Get Free Consultation</a>
             </Button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-foreground"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
+          {/* --- NEW: Mobile Menu Button & Sheet --- */}
+          <div className="md:hidden">
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-foreground">
+                  <Menu size={28} />
+                  <span className="sr-only">Toggle Menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+                {/* Logo inside menu */}
+                <div className="flex items-center mb-6 pt-4">
+                  <Link 
+                    to="/" 
+                    className="text-2xl font-bold gradient-text" 
+                    onClick={(e) => handleSmoothScroll(e, '/#home')}
+                  >
+                    Apna Growth Media
+                  </Link>
+                </div>
+                {/* Nav items inside menu */}
+                <nav className="flex flex-col space-y-4">
+                  {navItems.map(renderMobileNavItem)}
+                  <Button variant="glow" size="lg" className="w-full mt-4" asChild>
+                    <a href="#contact" onClick={(e) => handleSmoothScroll(e, '#contact')}>
+                      Get Free Consultation
+                    </a>
+                  </Button>
+                </nav>
+              </SheetContent>
+            </Sheet>
+          </div>
+
         </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden pb-6 animate-fade-in-up">
-            <nav className="flex flex-col space-y-4">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-foreground hover:text-primary transition-colors duration-300 font-medium py-2"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ))}
-              <Button variant="glow" size="lg" className="w-full rotating-border-glow animate-glow-pulse hover:scale-105 transition-all duration-300" asChild>
-                <a href="#contact">Get Free Consultation</a>
-              </Button>
-            </nav>
-          </div>
-        )}
+        {/* --- OLD MOBILE MENU (THE "BLACK SQUARE") IS NOW REMOVED --- */}
+
       </div>
     </header>
   );
