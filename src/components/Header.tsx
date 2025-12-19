@@ -26,7 +26,7 @@ const Header = () => {
     { name: "Services", href: "/#services", icon: Briefcase },
     { name: "Packages", href: "/#packages", icon: Package },
     { name: "Blog", href: "/blog", icon: BookOpen },
-    { name: "About Us", href: "/#about", icon: Users },
+    { name: "About Us", href: "/about", icon: Users },
     { name: "Contact", href: "/#contact", icon: Phone },
   ];
 
@@ -47,10 +47,10 @@ const Header = () => {
 
   // --- Helper for Desktop Nav ---
   const renderNavItem = (item: { name: string, href: string, icon: any }) => {
-    const isBlogLink = item.href === '/blog';
-    const isActive = isBlogLink ? location.pathname === '/blog' : location.pathname === '/' && location.hash === item.href.split('#')[1];
+    const isPageLink = item.href === '/blog' || item.href === '/about';
+    const isActive = isPageLink ? location.pathname === item.href : location.pathname === '/' && location.hash === item.href.split('#')[1];
 
-    if (isBlogLink) {
+    if (isPageLink) {
       return (
         <Link
           key={item.name}
@@ -81,11 +81,11 @@ const Header = () => {
 
   // --- Helper for Mobile Nav (links inside the Sheet) ---
   const renderMobileNavItem = (item: { name: string, href: string, icon: any }) => {
-    const isBlogLink = item.href === '/blog';
-    const isActive = isBlogLink ? location.pathname === '/blog' : location.pathname === '/' && location.hash === item.href.split('#')[1];
+    const isPageLink = item.href === '/blog' || item.href === '/about';
+    const isActive = isPageLink ? location.pathname === item.href : location.pathname === '/' && location.hash === item.href.split('#')[1];
     const Icon = item.icon;
 
-    if (isBlogLink) {
+    if (isPageLink) {
       return (
         <Link
           key={item.name}
