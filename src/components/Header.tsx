@@ -22,9 +22,9 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { name: "Home", href: "/#home", icon: Home },
+    { name: "Home", href: "/", icon: Home },
     { name: "Services", href: "/#services", icon: Briefcase },
-    { name: "Packages", href: "/#packages", icon: Package },
+    { name: "Packages", href: "/packages", icon: Package },
     { name: "Blog", href: "/blog", icon: BookOpen },
     { name: "About Us", href: "/about", icon: Users },
     { name: "Contact", href: "/#contact", icon: Phone },
@@ -47,8 +47,10 @@ const Header = () => {
 
   // --- Helper for Desktop Nav ---
   const renderNavItem = (item: { name: string, href: string, icon: any }) => {
-    const isPageLink = item.href === '/blog' || item.href === '/about';
-    const isActive = isPageLink ? location.pathname === item.href : location.pathname === '/' && location.hash === item.href.split('#')[1];
+    const isPageLink = item.href === '/blog' || item.href === '/about' || item.href === '/packages' || item.href === '/';
+    const isActive = isPageLink 
+      ? (item.href === '/' ? location.pathname === '/' && !location.hash : location.pathname === item.href)
+      : location.pathname === '/' && location.hash === item.href.split('#')[1];
 
     if (isPageLink) {
       return (
@@ -81,8 +83,10 @@ const Header = () => {
 
   // --- Helper for Mobile Nav (links inside the Sheet) ---
   const renderMobileNavItem = (item: { name: string, href: string, icon: any }) => {
-    const isPageLink = item.href === '/blog' || item.href === '/about';
-    const isActive = isPageLink ? location.pathname === item.href : location.pathname === '/' && location.hash === item.href.split('#')[1];
+    const isPageLink = item.href === '/blog' || item.href === '/about' || item.href === '/packages' || item.href === '/';
+    const isActive = isPageLink 
+      ? (item.href === '/' ? location.pathname === '/' && !location.hash : location.pathname === item.href)
+      : location.pathname === '/' && location.hash === item.href.split('#')[1];
     const Icon = item.icon;
 
     if (isPageLink) {
