@@ -1,4 +1,6 @@
 import { Star } from "lucide-react";
+import { motion } from "framer-motion";
+import { AnimatedSection, AnimatedCard } from "./animations";
 
 const Testimonials = () => {
   const testimonials = [
@@ -32,27 +34,47 @@ const Testimonials = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <AnimatedSection className="text-center mb-16">
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             What Our <span className="gradient-text">Clients Say</span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p
+            className="text-xl text-muted-foreground max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
             Real results from real businesses across India
-          </p>
-        </div>
+          </motion.p>
+        </AnimatedSection>
 
         {/* Testimonials Grid */}
         <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {testimonials.map((testimonial, index) => (
-            <div
+            <AnimatedCard
               key={index}
-              className="bg-card border border-border rounded-2xl p-8 card-hover animate-fade-in-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              index={index}
+              className="bg-card border border-border rounded-2xl p-8 transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(0,168,255,0.15)]"
             >
               {/* Rating Stars */}
               <div className="flex gap-1 mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + i * 0.1, type: "spring" }}
+                  >
+                    <Star className="w-5 h-5 fill-primary text-primary" />
+                  </motion.div>
                 ))}
               </div>
 
@@ -63,16 +85,20 @@ const Testimonials = () => {
 
               {/* Author */}
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-primary-foreground font-bold text-lg">
+                <motion.div
+                  className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-primary-foreground font-bold text-lg"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 400 }}
+                >
                   {testimonial.name.charAt(0)}
-                </div>
+                </motion.div>
                 <div>
                   <h4 className="font-semibold">{testimonial.name}</h4>
                   <p className="text-sm text-muted-foreground">{testimonial.role}</p>
                   <p className="text-xs text-muted-foreground">{testimonial.location}</p>
                 </div>
               </div>
-            </div>
+            </AnimatedCard>
           ))}
         </div>
       </div>
