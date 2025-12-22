@@ -96,10 +96,13 @@ const Packages = () => {
               <div className="mb-6">
                 <h3 className="text-2xl font-bold mb-2">{pkg.name}</h3>
                 <p className="text-muted-foreground text-sm mb-4">{pkg.description}</p>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-bold gradient-text">{pkg.price}</span>
+                <div className="flex items-baseline gap-2">
+                  <div className="relative">
+                    <span className="text-4xl font-bold gradient-text blur-md select-none">{pkg.price}</span>
+                  </div>
                   <span className="text-muted-foreground">{pkg.period}</span>
                 </div>
+                <p className="text-xs text-primary mt-2">Contact us for pricing</p>
               </div>
 
               <ul className="space-y-3 mb-8">
