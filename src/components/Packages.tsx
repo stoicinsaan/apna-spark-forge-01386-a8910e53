@@ -96,13 +96,10 @@ const Packages = () => {
               <div className="mb-6">
                 <h3 className="text-2xl font-bold mb-2">{pkg.name}</h3>
                 <p className="text-muted-foreground text-sm mb-4">{pkg.description}</p>
-                <div className="flex items-baseline gap-2">
-                  <div className="relative">
-                    <span className="text-4xl font-bold gradient-text blur-md select-none">{pkg.price}</span>
-                  </div>
-                  <span className="text-muted-foreground">{pkg.period}</span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-bold gradient-text line-through opacity-60">{pkg.price}</span>
+                  <span className="text-muted-foreground line-through opacity-60">{pkg.period}</span>
                 </div>
-                <p className="text-xs text-primary mt-2">Contact us for pricing</p>
               </div>
 
               <ul className="space-y-3 mb-8">
@@ -120,7 +117,13 @@ const Packages = () => {
                 className="w-full"
                 asChild
               >
-                <a href="#contact">Choose Plan & Try Free for 7 Days</a>
+                <a 
+                  href={`https://wa.me/919877830757?text=${encodeURIComponent(`Hi, I am interested in the ${pkg.name} plan. Please share more details.`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Choose Plan & Try 7 Days Free
+                </a>
               </Button>
             </div>
           ))}
