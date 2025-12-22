@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Youtube } from "lucide-react";
 import { motion } from "framer-motion";
 import { FloatingElement } from "./animations";
 
@@ -125,10 +125,37 @@ const Hero = () => {
                 </a>
               </Button>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-              <Button variant="outlineGlow" size="lg" className="text-lg px-8 py-6 h-auto" asChild>
-                <a href="#portfolio">
-                  <Play className="mr-2" size={20} /> Watch Demo Video
+            <motion.div 
+              whileHover={{ scale: 1.05 }} 
+              whileTap={{ scale: 0.98 }}
+              className="relative group"
+            >
+              <motion.div
+                className="absolute -inset-1 bg-gradient-to-r from-red-600 via-red-500 to-red-600 rounded-xl opacity-70 blur-sm group-hover:opacity-100 transition-opacity duration-300"
+                animate={{ 
+                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              />
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="relative text-lg px-8 py-6 h-auto bg-background border-red-500/50 hover:bg-red-500/10 hover:border-red-500 group" 
+                asChild
+              >
+                <a 
+                  href="https://youtube.com/@apnagrowthmedia?si=HG4dqAM2Lncl8Vgm" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3"
+                >
+                  <motion.div
+                    animate={{ scale: [1, 1.15, 1] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <Youtube className="text-red-500 group-hover:text-red-400 transition-colors" size={24} />
+                  </motion.div>
+                  <span className="group-hover:text-red-400 transition-colors">Watch on YouTube</span>
                 </a>
               </Button>
             </motion.div>
