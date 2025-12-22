@@ -228,18 +228,10 @@ const PackagesPage = () => {
                       </motion.div>
                       <h3 className="text-2xl font-bold mb-2 text-foreground">{pkg.name}</h3>
                       <p className="text-muted-foreground text-sm mb-4">{pkg.description}</p>
-                      <div className="flex items-baseline gap-2">
-                        <div className="relative">
-                          <span className="text-4xl font-bold gradient-text blur-md select-none">{pkg.price}</span>
-                          <motion.div 
-                            className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-lg"
-                            animate={{ opacity: [0.5, 0.8, 0.5] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                          />
-                        </div>
-                        <span className="text-muted-foreground">{pkg.period}</span>
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-4xl font-bold gradient-text line-through opacity-60">{pkg.price}</span>
+                        <span className="text-muted-foreground line-through opacity-60">{pkg.period}</span>
                       </div>
-                      <p className="text-xs text-primary mt-2">Contact us for pricing</p>
                     </div>
 
                     <ul className="space-y-3 mb-8">
@@ -287,7 +279,12 @@ const PackagesPage = () => {
                           className="relative w-full group/btn bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                           asChild
                         >
-                          <a href="/#contact" className="flex items-center justify-center gap-2">
+                          <a 
+                            href={`https://wa.me/919877830757?text=${encodeURIComponent(`Hi, I am interested in the ${pkg.name} plan. Please share more details.`)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-2"
+                          >
                             <motion.span
                               animate={{ scale: [1, 1.05, 1] }}
                               transition={{ duration: 2, repeat: Infinity }}
@@ -312,7 +309,12 @@ const PackagesPage = () => {
                           className="w-full group/btn"
                           asChild
                         >
-                          <a href="/#contact" className="flex items-center justify-center gap-2">
+                          <a 
+                            href={`https://wa.me/919877830757?text=${encodeURIComponent(`Hi, I am interested in the ${pkg.name} plan. Please share more details.`)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-2"
+                          >
                             Choose Plan & Try 7 Days Free
                             <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                           </a>
