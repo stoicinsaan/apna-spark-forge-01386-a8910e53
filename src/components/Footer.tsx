@@ -58,20 +58,31 @@ const Footer = () => {
           >
             <h4 className="font-semibold text-lg mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              {["Home", "Services", "Packages", "Portfolio", "About Us", "Contact Us"].map((link, index) => (
+              {[
+                { name: "Home", href: "/" },
+                { name: "Services", href: "/#services" },
+                { name: "Packages", href: "/packages" },
+                { name: "Blog", href: "/blog" },
+                { name: "About Us", href: "/about" },
+                { name: "Contact Us", href: "/#contact" },
+              ].map((link, index) => (
                 <motion.li
-                  key={link}
+                  key={link.name}
                   initial={{ opacity: 0, x: -10 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 + index * 0.05 }}
+                  whileHover={{ x: 8 }}
                 >
-                  <a
-                    href={`#${link.toLowerCase().replace(" ", "")}`}
-                    className="text-muted-foreground hover:text-primary transition-colors hover:pl-2 duration-300 inline-block"
+                  <Link
+                    to={link.href}
+                    className="text-muted-foreground hover:text-primary transition-all duration-300 inline-flex items-center gap-2 group"
                   >
-                    {link}
-                  </a>
+                    <motion.span
+                      className="w-0 h-0.5 bg-primary group-hover:w-3 transition-all duration-300"
+                    />
+                    {link.name}
+                  </Link>
                 </motion.li>
               ))}
             </ul>

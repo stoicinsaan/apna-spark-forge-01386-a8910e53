@@ -208,7 +208,7 @@ const PackagesPage = () => {
                   }`}>
                     {pkg.popular && (
                       <motion.div
-                        className="absolute -top-4 left-1/2 transform -translate-x-1/2"
+                        className="absolute -top-4 left-0 right-0 flex justify-center"
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.5 }}
