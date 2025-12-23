@@ -150,9 +150,9 @@ const PackagesPage = () => {
         </section>
 
         {/* Benefits Bar */}
-        <section className="py-8 bg-muted/30 border-y border-border/30">
+        <section className="py-8 bg-gradient-to-r from-primary/5 via-secondary/5 to-primary/5 border-y border-primary/20">
           <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {benefits.map((benefit, index) => (
                 <motion.div
                   key={index}
@@ -161,13 +161,13 @@ const PackagesPage = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   whileHover={{ scale: 1.05 }}
-                  className="flex items-center justify-center gap-3 cursor-default"
+                  className="flex flex-col sm:flex-row items-center justify-center text-center sm:text-left gap-3 cursor-default p-4 rounded-xl bg-card/50 border border-border/30"
                 >
                   <motion.div
-                    className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center"
+                    className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center flex-shrink-0"
                     whileHover={{ rotate: 10 }}
                   >
-                    <benefit.icon className="w-5 h-5 text-primary" />
+                    <benefit.icon className="w-6 h-6 text-primary" />
                   </motion.div>
                   <div>
                     <h3 className="font-semibold text-foreground">{benefit.title}</h3>
@@ -180,9 +180,9 @@ const PackagesPage = () => {
         </section>
 
         {/* Packages Grid */}
-        <section className="py-20">
+        <section className="py-20 bg-gradient-to-b from-background via-primary/5 to-background">
           <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto items-stretch">
               {packages.map((pkg, index) => (
                 <AnimatedCard
                   key={index}
@@ -194,17 +194,20 @@ const PackagesPage = () => {
                   {pkg.popular && (
                     <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
                       <motion.div
-                        className="absolute inset-[-2px] bg-gradient-conic from-primary via-secondary to-primary opacity-60 blur-sm"
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-[-2px] bg-gradient-to-r from-primary via-secondary to-primary opacity-70 blur-md"
+                        animate={{ 
+                          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                        }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                        style={{ backgroundSize: "200% 200%" }}
                       />
                     </div>
                   )}
                   
-                  <div className={`relative bg-card border rounded-2xl p-8 h-full transition-all duration-300 ${
+                  <div className={`relative bg-gradient-to-b from-card to-card/80 border rounded-2xl p-6 lg:p-8 h-full transition-all duration-300 ${
                     pkg.popular
-                      ? "border-primary/50 shadow-[0_0_40px_rgba(0,168,255,0.2)] z-10"
-                      : "border-border hover:border-primary/50 hover:shadow-[0_0_30px_rgba(0,168,255,0.1)]"
+                      ? "border-primary shadow-[0_0_50px_rgba(0,168,255,0.3)] z-10"
+                      : "border-border/50 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(0,168,255,0.15)]"
                   }`}>
                     {pkg.popular && (
                       <motion.div
@@ -219,18 +222,18 @@ const PackagesPage = () => {
                       </motion.div>
                     )}
 
-                    <div className="mb-6">
+                    <div className="mb-6 text-center md:text-left">
                       <motion.div
-                        className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
+                        className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-4 group-hover:from-primary/30 group-hover:to-secondary/30 transition-all mx-auto md:mx-0"
                         whileHover={{ scale: 1.1, rotate: 5 }}
                       >
                         <pkg.icon className="w-7 h-7 text-primary" />
                       </motion.div>
                       <h3 className="text-2xl font-bold mb-2 text-foreground">{pkg.name}</h3>
                       <p className="text-muted-foreground text-sm mb-4">{pkg.description}</p>
-                      <div className="flex items-baseline gap-1">
-                        <span className="text-4xl font-bold gradient-text line-through opacity-60">{pkg.price}</span>
-                        <span className="text-muted-foreground line-through opacity-60">{pkg.period}</span>
+                      <div className="flex items-baseline gap-1 justify-center md:justify-start">
+                        <span className="text-3xl lg:text-4xl font-bold text-primary/70 line-through">{pkg.price}</span>
+                        <span className="text-muted-foreground/70 line-through">{pkg.period}</span>
                       </div>
                     </div>
 
@@ -245,7 +248,7 @@ const PackagesPage = () => {
                           transition={{ delay: 0.3 + i * 0.05 }}
                         >
                           <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                          <span className="text-sm text-muted-foreground">{feature}</span>
+                          <span className="text-sm text-muted-foreground text-left">{feature}</span>
                         </motion.li>
                       ))}
                     </ul>
