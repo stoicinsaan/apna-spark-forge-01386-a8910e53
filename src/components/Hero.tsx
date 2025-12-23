@@ -131,16 +131,17 @@ const Hero = () => {
               className="relative group"
             >
               <motion.div
-                className="absolute -inset-1 bg-gradient-to-r from-red-600 via-red-500 to-red-600 rounded-xl opacity-70 blur-sm group-hover:opacity-100 transition-opacity duration-300"
+                className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-primary rounded-xl opacity-50 blur-sm group-hover:opacity-80 transition-opacity duration-300"
                 animate={{ 
                   backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
                 }}
                 transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                style={{ backgroundSize: "200% 200%" }}
               />
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="relative text-lg px-8 py-6 h-auto bg-background border-red-500/50 hover:bg-red-500/10 hover:border-red-500 group" 
+                className="relative text-lg px-8 py-6 h-auto bg-background/95 border-primary/40 hover:bg-primary/10 hover:border-primary group" 
                 asChild
               >
                 <a 
@@ -150,12 +151,12 @@ const Hero = () => {
                   className="flex items-center gap-3"
                 >
                   <motion.div
-                    animate={{ scale: [1, 1.15, 1] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    <Youtube className="text-red-500 group-hover:text-red-400 transition-colors" size={24} />
+                    <Youtube className="text-primary group-hover:text-secondary transition-colors" size={24} />
                   </motion.div>
-                  <span className="group-hover:text-red-400 transition-colors">Watch on YouTube</span>
+                  <span className="text-foreground group-hover:text-primary transition-colors">Watch on YouTube</span>
                 </a>
               </Button>
             </motion.div>
