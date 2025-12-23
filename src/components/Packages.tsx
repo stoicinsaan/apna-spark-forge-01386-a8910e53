@@ -67,38 +67,38 @@ const Packages = () => {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-6">
             Flexible plans designed to fit your business needs
           </p>
-          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-secondary/10 border border-secondary/30">
-            <Sparkles className="w-5 h-5 text-secondary" />
-            <span className="text-foreground font-semibold">✅ 7-Day Free Trial included with all packages</span>
+          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/30">
+            <Sparkles className="w-5 h-5 text-primary" />
+            <span className="text-foreground font-semibold">7-Day Free Trial included with all packages</span>
           </div>
         </div>
 
         {/* Packages Grid */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
           {packages.map((pkg, index) => (
             <div
               key={index}
-              className={`relative bg-card border rounded-2xl p-8 animate-fade-in-up ${
+              className={`relative bg-gradient-to-b from-card to-card/80 border rounded-2xl p-6 lg:p-8 animate-fade-in-up ${
                 pkg.popular
-                  ? "border-primary shadow-[0_0_40px_rgba(0,168,255,0.3)] scale-105"
-                  : "border-border hover:border-primary/50"
+                  ? "border-primary shadow-[0_0_50px_rgba(0,168,255,0.3)] md:scale-105"
+                  : "border-border/50 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(0,168,255,0.15)]"
               } transition-all duration-300`}
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {pkg.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-primary to-secondary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold">
+                  <span className="bg-gradient-to-r from-primary to-secondary text-primary-foreground px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap">
                     Most Popular
                   </span>
                 </div>
               )}
 
-              <div className="mb-6">
+              <div className="mb-6 text-center md:text-left">
                 <h3 className="text-2xl font-bold mb-2">{pkg.name}</h3>
                 <p className="text-muted-foreground text-sm mb-4">{pkg.description}</p>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-4xl font-bold gradient-text line-through opacity-60">{pkg.price}</span>
-                  <span className="text-muted-foreground line-through opacity-60">{pkg.period}</span>
+                <div className="flex items-baseline gap-1 justify-center md:justify-start">
+                  <span className="text-3xl lg:text-4xl font-bold text-primary/70 line-through">{pkg.price}</span>
+                  <span className="text-muted-foreground/70 line-through">{pkg.period}</span>
                 </div>
               </div>
 
@@ -106,7 +106,7 @@ const Packages = () => {
                 {pkg.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-muted-foreground">{feature}</span>
+                    <span className="text-sm text-muted-foreground text-left">{feature}</span>
                   </li>
                 ))}
               </ul>
