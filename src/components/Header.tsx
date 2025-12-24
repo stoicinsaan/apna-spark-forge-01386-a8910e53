@@ -105,13 +105,13 @@ const Header = () => {
         <Link
           key={item.name}
           to={item.href}
-          className={`flex items-center gap-3 text-foreground hover:text-primary transition-all duration-300 font-medium py-3 text-lg border-b border-border/30 ${
-            isActive ? 'text-primary border-b-2 border-primary' : ''
+          className={`flex items-center gap-3 text-foreground hover:text-primary transition-all duration-300 font-medium py-3 text-base border-b border-border/30 ${
+            isActive ? 'text-primary' : ''
           }`}
           onClick={() => setIsMobileMenuOpen(false)}
         >
-          <Icon className="w-5 h-5" />
-          {item.name}
+          <Icon className="w-4 h-4 flex-shrink-0" />
+          <span>{item.name}</span>
         </Link>
       );
     }
@@ -120,13 +120,13 @@ const Header = () => {
       <a
         key={item.name}
         href={item.href}
-        className={`flex items-center gap-3 text-foreground hover:text-primary transition-all duration-300 font-medium py-3 text-lg border-b border-border/30 ${
-          isActive ? 'text-primary border-b-2 border-primary' : ''
+        className={`flex items-center gap-3 text-foreground hover:text-primary transition-all duration-300 font-medium py-3 text-base border-b border-border/30 ${
+          isActive ? 'text-primary' : ''
         }`}
         onClick={(e) => handleSmoothScroll(e, item.href)}
       >
-        <Icon className="w-5 h-5" />
-        {item.name}
+        <Icon className="w-4 h-4 flex-shrink-0" />
+        <span>{item.name}</span>
       </a>
     );
   };
@@ -140,121 +140,127 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div className="flex items-center">
-            <Link to="/" className="text-2xl font-bold gradient-text" onClick={(e) => handleSmoothScroll(e, '/#home')}>
+          <div className="flex items-center flex-shrink-0">
+            <Link to="/" className="text-xl md:text-2xl font-bold gradient-text" onClick={(e) => handleSmoothScroll(e, '/#home')}>
               Apna Growth Media
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navItems.map(renderNavItem)}
-            
-            {/* Tools Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger className={`flex items-center gap-1 text-foreground hover:text-primary transition-all duration-300 font-medium relative pb-1 ${
-                location.pathname === '/roi-calculator' || location.pathname === '/site-audit' 
-                  ? 'text-primary after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:shadow-glow' 
-                  : ''
-              }`}>
-                <Wrench className="w-4 h-4" />
-                Tools
-                <ChevronDown className="w-3 h-3" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent 
-                className="bg-background/95 backdrop-blur-lg border-border/50 shadow-lg shadow-primary/10"
-                align="center"
-              >
-                {toolsItems.map((item) => (
-                  <DropdownMenuItem key={item.name} asChild>
-                    <Link 
-                      to={item.href} 
-                      className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors"
-                    >
-                      <item.icon className="w-4 h-4 text-primary" />
-                      {item.name}
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+          {/* Desktop Navigation - Centered */}
+          <nav className="hidden lg:flex items-center justify-center flex-1 mx-4">
+            <div className="flex items-center space-x-6 xl:space-x-8">
+              {navItems.map(renderNavItem)}
+              
+              {/* Tools Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger className={`flex items-center gap-1 text-foreground hover:text-primary transition-all duration-300 font-medium relative pb-1 outline-none ${
+                  location.pathname === '/roi-calculator' || location.pathname === '/site-audit' 
+                    ? 'text-primary after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:shadow-glow' 
+                    : ''
+                }`}>
+                  <Wrench className="w-4 h-4" />
+                  Tools
+                  <ChevronDown className="w-3 h-3" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent 
+                  className="bg-background/95 backdrop-blur-lg border-border/50 shadow-lg shadow-primary/10"
+                  align="center"
+                >
+                  {toolsItems.map((item) => (
+                    <DropdownMenuItem key={item.name} asChild>
+                      <Link 
+                        to={item.href} 
+                        className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors"
+                      >
+                        <item.icon className="w-4 h-4 text-primary" />
+                        {item.name}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </nav>
 
           {/* CTA Button */}
-          <div className="hidden md:block">
+          <div className="hidden lg:block flex-shrink-0">
             <Button variant="glow" size="lg" asChild>
               <a href="#contact">Get Free Consultation</a>
             </Button>
           </div>
 
-          {/* --- NEW: Mobile Menu Button & Sheet --- */}
-          <div className="md:hidden">
+          {/* Mobile Menu Button & Sheet */}
+          <div className="lg:hidden">
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="text-foreground hover:bg-primary/10">
-                  <div className="relative">
-                    <div className={`w-6 h-0.5 bg-foreground mb-1.5 transition-all ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></div>
-                    <div className={`w-6 h-0.5 bg-foreground mb-1.5 transition-all ${isMobileMenuOpen ? 'opacity-0' : ''}`}></div>
-                    <div className={`w-6 h-0.5 bg-foreground transition-all ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></div>
+                  <div className="relative flex flex-col justify-center items-center w-6 h-6">
+                    <div className={`w-5 h-0.5 bg-foreground transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-1' : ''}`}></div>
+                    <div className={`w-5 h-0.5 bg-foreground my-1 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></div>
+                    <div className={`w-5 h-0.5 bg-foreground transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1' : ''}`}></div>
                   </div>
                   <span className="sr-only">Toggle Menu</span>
                 </Button>
               </SheetTrigger>
               <SheetContent 
                 side="right" 
-                className="w-[320px] sm:w-[400px] bg-gradient-to-b from-background via-background to-background/95 backdrop-blur-xl border-l border-primary/20"
+                className="w-[280px] sm:w-[350px] bg-gradient-to-b from-background via-background to-background/95 backdrop-blur-xl border-l border-primary/20 p-0"
               >
-                {/* Logo inside menu */}
-                <div className="flex items-center mb-8 pt-4">
-                  <Link 
-                    to="/" 
-                    className="text-2xl font-bold gradient-text" 
-                    onClick={(e) => handleSmoothScroll(e, '/#home')}
-                  >
-                    Apna Growth Media
-                  </Link>
-                </div>
-                {/* Nav items inside menu */}
-                <nav className="flex flex-col">
-                  {navItems.map(renderMobileNavItem)}
-                  
-                  {/* Tools Section */}
-                  <div className="py-3 border-b border-border/30">
-                    <p className="flex items-center gap-2 text-primary font-semibold text-lg mb-2">
-                      <Wrench className="w-5 h-5" />
-                      Tools
-                    </p>
-                    {toolsItems.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.href}
-                        className={`flex items-center gap-3 text-foreground hover:text-primary transition-all duration-300 font-medium py-2 pl-7 text-base ${
-                          location.pathname === item.href ? 'text-primary' : ''
-                        }`}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        <item.icon className="w-4 h-4" />
-                        {item.name}
-                      </Link>
-                    ))}
-                  </div>
-                  {/* CTA Section */}
-                  <div className="mt-8 pt-6 border-t border-border/30">
-                    <p className="text-sm text-center text-muted-foreground mb-3">
-                      Ready to grow your business?
-                    </p>
-                    <Button 
-                      variant="glow" 
-                      size="lg" 
-                      className="w-full transition-transform hover:scale-105" 
-                      asChild
+                <div className="flex flex-col h-full p-6">
+                  {/* Logo inside menu */}
+                  <div className="flex items-center justify-start mb-6 pt-2">
+                    <Link 
+                      to="/" 
+                      className="text-xl font-bold gradient-text" 
+                      onClick={(e) => handleSmoothScroll(e, '/#home')}
                     >
-                      <a href="#contact" onClick={(e) => handleSmoothScroll(e, '#contact')}>
-                        Get Free Consultation
-                      </a>
-                    </Button>
+                      Apna Growth Media
+                    </Link>
                   </div>
-                </nav>
+                  
+                  {/* Nav items inside menu */}
+                  <nav className="flex flex-col flex-1 overflow-y-auto">
+                    {navItems.map(renderMobileNavItem)}
+                    
+                    {/* Tools Section */}
+                    <div className="py-3 border-b border-border/30">
+                      <p className="flex items-center gap-2 text-primary font-semibold text-base mb-2">
+                        <Wrench className="w-4 h-4" />
+                        Tools
+                      </p>
+                      {toolsItems.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.href}
+                          className={`flex items-center gap-3 text-foreground hover:text-primary transition-all duration-300 font-medium py-2 pl-6 text-sm ${
+                            location.pathname === item.href ? 'text-primary' : ''
+                          }`}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                        >
+                          <item.icon className="w-4 h-4" />
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                    
+                    {/* CTA Section */}
+                    <div className="mt-auto pt-6 border-t border-border/30">
+                      <p className="text-xs text-center text-muted-foreground mb-3">
+                        Ready to grow your business?
+                      </p>
+                      <Button 
+                        variant="glow" 
+                        size="default" 
+                        className="w-full transition-transform hover:scale-105" 
+                        asChild
+                      >
+                        <a href="#contact" onClick={(e) => handleSmoothScroll(e, '#contact')}>
+                          Get Free Consultation
+                        </a>
+                      </Button>
+                    </div>
+                  </nav>
+                </div>
               </SheetContent>
             </Sheet>
           </div>
