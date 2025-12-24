@@ -11,6 +11,8 @@ import ScrollToTop from "./components/ScrollToTop";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AboutUsPage from "./pages/AboutUsPage";
 import PackagesPage from "./pages/PackagesPage";
+import ROICalculatorPage from "./pages/ROICalculatorPage";
+import SiteAuditPage from "./pages/SiteAuditPage";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,8 @@ const App = () => (
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/about" element={<AboutUsPage />} />
           <Route path="/packages" element={<PackagesPage />} />
+          <Route path="/roi-calculator" element={<ROICalculatorPage />} />
+          <Route path="/site-audit" element={<SiteAuditPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

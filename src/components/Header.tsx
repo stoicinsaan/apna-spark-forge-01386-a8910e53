@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Home, Briefcase, Package, BookOpen, Users, Phone } from "lucide-react";
+import { Home, Briefcase, Package, BookOpen, Users, Phone, Wrench, Calculator, Search, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Sheet,
   SheetContent,
@@ -28,6 +34,11 @@ const Header = () => {
     { name: "Blog", href: "/blog", icon: BookOpen },
     { name: "About Us", href: "/about", icon: Users },
     { name: "Contact", href: "/#contact", icon: Phone },
+  ];
+
+  const toolsItems = [
+    { name: "ROI Calculator", href: "/roi-calculator", icon: Calculator },
+    { name: "Site Audit", href: "/site-audit", icon: Search },
   ];
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -138,6 +149,35 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {navItems.map(renderNavItem)}
+            
+            {/* Tools Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className={`flex items-center gap-1 text-foreground hover:text-primary transition-all duration-300 font-medium relative pb-1 ${
+                location.pathname === '/roi-calculator' || location.pathname === '/site-audit' 
+                  ? 'text-primary after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:shadow-glow' 
+                  : ''
+              }`}>
+                <Wrench className="w-4 h-4" />
+                Tools
+                <ChevronDown className="w-3 h-3" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent 
+                className="bg-background/95 backdrop-blur-lg border-border/50 shadow-lg shadow-primary/10"
+                align="center"
+              >
+                {toolsItems.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link 
+                      to={item.href} 
+                      className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors"
+                    >
+                      <item.icon className="w-4 h-4 text-primary" />
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
 
           {/* CTA Button */}
@@ -178,6 +218,26 @@ const Header = () => {
                 <nav className="flex flex-col">
                   {navItems.map(renderMobileNavItem)}
                   
+                  {/* Tools Section */}
+                  <div className="py-3 border-b border-border/30">
+                    <p className="flex items-center gap-2 text-primary font-semibold text-lg mb-2">
+                      <Wrench className="w-5 h-5" />
+                      Tools
+                    </p>
+                    {toolsItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        className={`flex items-center gap-3 text-foreground hover:text-primary transition-all duration-300 font-medium py-2 pl-7 text-base ${
+                          location.pathname === item.href ? 'text-primary' : ''
+                        }`}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        <item.icon className="w-4 h-4" />
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
                   {/* CTA Section */}
                   <div className="mt-8 pt-6 border-t border-border/30">
                     <p className="text-sm text-center text-muted-foreground mb-3">
