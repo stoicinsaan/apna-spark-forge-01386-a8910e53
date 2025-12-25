@@ -13,6 +13,7 @@ import AboutUsPage from "./pages/AboutUsPage";
 import PackagesPage from "./pages/PackagesPage";
 import ROICalculatorPage from "./pages/ROICalculatorPage";
 import SiteAuditPage from "./pages/SiteAuditPage";
+import ServicesPage from "./pages/ServicesPage";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/packages" element={<PackagesPage />} />
           <Route path="/roi-calculator" element={<ROICalculatorPage />} />
           <Route path="/site-audit" element={<SiteAuditPage />} />
+          <Route path="/services" element={<ServicesPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
