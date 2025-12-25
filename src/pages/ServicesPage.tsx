@@ -167,7 +167,7 @@ const ServicesPage = () => {
               </motion.div>
 
               <motion.h1
-                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-2"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
@@ -177,7 +177,7 @@ const ServicesPage = () => {
               </motion.h1>
 
               <motion.p
-                className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto"
+                className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto px-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -187,25 +187,25 @@ const ServicesPage = () => {
               </motion.p>
 
               <motion.div
-                className="flex flex-col sm:flex-row items-center justify-center gap-4"
+                className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full px-4 sm:px-0"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
-                <Button variant="glow" size="lg" className="text-lg px-8 py-6 h-auto" asChild>
+                <Button variant="glow" size="lg" className="text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 h-auto w-full sm:w-auto" asChild>
                   <a href="/site-audit">Get Free Local Audit</a>
                 </Button>
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="text-lg px-8 py-6 h-auto border-primary/30 hover:border-primary/60 hover:bg-primary/5"
+                  className="text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 h-auto border-primary/30 hover:border-primary/60 hover:bg-primary/5 w-full sm:w-auto"
                   asChild
                 >
                   <a 
                     href="https://wa.me/919289040548?text=Hi!%20I'm%20interested%20in%20your%20local%20marketing%20services."
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2"
+                    className="flex items-center justify-center gap-2"
                   >
                     <MessageSquare className="w-5 h-5 text-primary" />
                     WhatsApp Us
@@ -237,22 +237,27 @@ const ServicesPage = () => {
               </p>
             </AnimatedSection>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {industries.map((industry, index) => {
                 const Icon = industry.icon;
                 return (
                   <AnimatedCard key={index} index={index}>
                     <Card className="bg-card border-border hover:border-primary/50 transition-all duration-300 h-full group">
-                      <CardContent className="p-6">
-                        <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${industry.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                          <Icon className="w-7 h-7 text-white" />
-                        </div>
-                        <h3 className="text-xl font-semibold mb-3">{industry.title}</h3>
+                      <CardContent className="p-5 sm:p-6">
+                        <motion.div 
+                          className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${industry.color} flex items-center justify-center mb-4`}
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          animate={{ y: [0, -5, 0] }}
+                          transition={{ y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 } }}
+                        >
+                          <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-primary-foreground" />
+                        </motion.div>
+                        <h3 className="text-lg sm:text-xl font-semibold mb-3">{industry.title}</h3>
                         <ul className="space-y-2">
                           {industry.items.map((item, i) => (
                             <li key={i} className="text-muted-foreground text-sm flex items-center gap-2">
                               <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
-                              {item}
+                              <span>{item}</span>
                             </li>
                           ))}
                         </ul>
@@ -277,28 +282,33 @@ const ServicesPage = () => {
               </p>
             </AnimatedSection>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {painPoints.map((point, index) => {
                 const Icon = point.icon;
                 return (
                   <AnimatedCard key={index} index={index}>
                     <Card className="bg-card border-border h-full overflow-hidden group hover:border-primary/50 transition-all duration-300">
-                      <CardContent className="p-6 relative">
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-destructive/10 to-transparent rounded-bl-full group-hover:from-primary/10 transition-all duration-500" />
+                      <CardContent className="p-5 sm:p-6 relative">
+                        <div className="absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-destructive/10 to-transparent rounded-bl-full group-hover:from-primary/10 transition-all duration-500" />
                         
-                        <div className="mb-6">
-                          <div className="w-12 h-12 rounded-lg bg-destructive/10 flex items-center justify-center mb-3 group-hover:bg-primary/10 transition-colors duration-300">
-                            <Icon className="w-6 h-6 text-destructive group-hover:text-primary transition-colors duration-300" />
-                          </div>
-                          <p className="text-sm text-destructive font-medium line-through opacity-70 group-hover:opacity-100">{point.problem}</p>
+                        <div className="mb-5 sm:mb-6">
+                          <motion.div 
+                            className="w-11 h-11 sm:w-12 sm:h-12 rounded-lg bg-destructive/10 flex items-center justify-center mb-3 group-hover:bg-primary/10 transition-colors duration-300"
+                            whileHover={{ scale: 1.1 }}
+                            animate={{ rotate: [0, 5, -5, 0] }}
+                            transition={{ rotate: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 } }}
+                          >
+                            <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-destructive group-hover:text-primary transition-colors duration-300" />
+                          </motion.div>
+                          <p className="text-sm text-destructive/80 font-medium line-through">{point.problem}</p>
                         </div>
                         
                         <div className="pt-4 border-t border-border">
                           <div className="flex items-center gap-2 mb-2">
-                            <CheckCircle2 className="w-5 h-5 text-primary" />
-                            <span className="text-sm text-primary font-medium">Solution</span>
+                            <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0" />
+                            <span className="text-xs sm:text-sm text-primary font-medium">Solution</span>
                           </div>
-                          <p className="text-foreground font-semibold">{point.solution}</p>
+                          <p className="text-foreground font-semibold text-sm sm:text-base">{point.solution}</p>
                         </div>
                       </CardContent>
                     </Card>
@@ -321,30 +331,40 @@ const ServicesPage = () => {
               </p>
             </AnimatedSection>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
               {coreServices.map((service, index) => {
                 const Icon = service.icon;
                 return (
                   <AnimatedCard key={index} index={index}>
                     <Card className="bg-card border-border h-full hover:border-primary/50 transition-all duration-300 overflow-hidden group">
-                      <CardContent className="p-8 relative">
+                      <CardContent className="p-5 sm:p-6 lg:p-8 relative">
                         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         
-                        <div className="flex items-start gap-6 relative z-10">
-                          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                            <Icon className="w-8 h-8 text-primary-foreground" />
-                          </div>
+                        <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-5 lg:gap-6 relative z-10">
+                          <motion.div 
+                            className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0"
+                            whileHover={{ scale: 1.1, rotate: 5 }}
+                            animate={{ 
+                              boxShadow: ["0 0 0 rgba(0,168,255,0)", "0 0 20px rgba(0,168,255,0.4)", "0 0 0 rgba(0,168,255,0)"]
+                            }}
+                            transition={{ 
+                              boxShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+                              scale: { type: "spring", stiffness: 400 }
+                            }}
+                          >
+                            <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary-foreground" />
+                          </motion.div>
                           
-                          <div className="flex-1">
-                            <h3 className="text-2xl font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-xl sm:text-2xl font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
                               {service.title}
                             </h3>
-                            <p className="text-muted-foreground mb-4">{service.description}</p>
+                            <p className="text-muted-foreground text-sm sm:text-base mb-4">{service.description}</p>
                             
-                            <ul className="grid grid-cols-2 gap-2">
+                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                               {service.features.map((feature, i) => (
                                 <li key={i} className="flex items-center gap-2 text-sm">
-                                  <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                                  <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
                                   <span className="text-muted-foreground">{feature}</span>
                                 </li>
                               ))}
@@ -403,20 +423,26 @@ const ServicesPage = () => {
             </div>
 
             {/* Mobile Timeline */}
-            <div className="lg:hidden space-y-6">
+            <div className="lg:hidden space-y-4">
               {processSteps.map((step, index) => {
                 const Icon = step.icon;
                 return (
                   <AnimatedCard key={index} index={index}>
                     <Card className="bg-card border-border">
-                      <CardContent className="p-6 flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0">
-                          <Icon className="w-8 h-8 text-primary-foreground" />
-                        </div>
-                        <div>
-                          <span className="text-primary font-bold text-sm">Step {step.step}</span>
-                          <h3 className="text-lg font-semibold">{step.title}</h3>
-                          <p className="text-muted-foreground text-sm">{step.description}</p>
+                      <CardContent className="p-4 sm:p-5 flex items-start gap-4">
+                        <motion.div 
+                          className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0"
+                          animate={{ 
+                            boxShadow: ["0 0 0 rgba(0,168,255,0)", "0 0 20px rgba(0,168,255,0.4)", "0 0 0 rgba(0,168,255,0)"]
+                          }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
+                        >
+                          <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-primary-foreground" />
+                        </motion.div>
+                        <div className="flex-1 min-w-0">
+                          <span className="text-primary font-bold text-xs sm:text-sm">Step {step.step}</span>
+                          <h3 className="text-base sm:text-lg font-semibold">{step.title}</h3>
+                          <p className="text-muted-foreground text-xs sm:text-sm">{step.description}</p>
                         </div>
                       </CardContent>
                     </Card>
@@ -439,21 +465,26 @@ const ServicesPage = () => {
               </p>
             </AnimatedSection>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {whyUs.map((item, index) => {
                 const Icon = item.icon;
                 return (
                   <AnimatedCard key={index} index={index}>
                     <Card className="bg-card border-border h-full text-center hover:border-primary/50 transition-all duration-300 group">
-                      <CardContent className="p-6">
+                      <CardContent className="p-4 sm:p-6">
                         <motion.div
-                          className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-4 group-hover:from-primary group-hover:to-secondary transition-all duration-300"
-                          whileHover={{ rotate: 5 }}
+                          className="w-12 h-12 sm:w-16 sm:h-16 mx-auto rounded-xl sm:rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:from-primary group-hover:to-secondary transition-all duration-300"
+                          whileHover={{ rotate: 5, scale: 1.1 }}
+                          animate={{ 
+                            scale: [1, 1.05, 1],
+                            boxShadow: ["0 0 0 rgba(0,168,255,0)", "0 0 15px rgba(0,168,255,0.3)", "0 0 0 rgba(0,168,255,0)"]
+                          }}
+                          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.4 }}
                         >
-                          <Icon className="w-8 h-8 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
+                          <Icon className="w-6 h-6 sm:w-8 sm:h-8 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
                         </motion.div>
-                        <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                        <p className="text-muted-foreground text-sm">{item.description}</p>
+                        <h3 className="text-sm sm:text-lg font-semibold mb-1 sm:mb-2">{item.title}</h3>
+                        <p className="text-muted-foreground text-xs sm:text-sm">{item.description}</p>
                       </CardContent>
                     </Card>
                   </AnimatedCard>
@@ -475,11 +506,11 @@ const ServicesPage = () => {
               </p>
             </AnimatedSection>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto">
               {pricingTiers.map((tier, index) => (
-                <AnimatedCard key={index} index={index}>
+                <AnimatedCard key={index} index={index} className={index === 2 ? 'sm:col-span-2 lg:col-span-1' : ''}>
                   <Card className={`bg-card border-border h-full hover:border-primary/50 transition-all duration-300 ${index === 1 ? 'ring-2 ring-primary shadow-lg shadow-primary/20' : ''}`}>
-                    <CardContent className="p-6">
+                    <CardContent className="p-5 sm:p-6">
                       {index === 1 && (
                         <div className="text-center mb-4">
                           <span className="px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-medium">
@@ -487,10 +518,10 @@ const ServicesPage = () => {
                           </span>
                         </div>
                       )}
-                      <h3 className="text-xl font-semibold mb-1 text-center">{tier.name}</h3>
-                      <p className="text-muted-foreground text-sm text-center mb-6">{tier.audience}</p>
+                      <h3 className="text-lg sm:text-xl font-semibold mb-1 text-center">{tier.name}</h3>
+                      <p className="text-muted-foreground text-xs sm:text-sm text-center mb-5 sm:mb-6">{tier.audience}</p>
                       
-                      <ul className="space-y-3 mb-6">
+                      <ul className="space-y-2 sm:space-y-3 mb-5 sm:mb-6">
                         {tier.features.map((feature, i) => (
                           <li key={i} className="flex items-center gap-2 text-sm">
                             <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
