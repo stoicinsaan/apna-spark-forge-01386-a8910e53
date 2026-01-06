@@ -1,5 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
+import { Routes, Route } from "react-router-dom";
 import Index from "@/pages/Index";
 import NotFound from "@/pages/NotFound";
 import BlogPage from "@/pages/BlogPage";
@@ -13,43 +12,39 @@ import ServicesPage from "@/pages/ServicesPage";
 import PageTransition from "./PageTransition";
 
 const AnimatedRoutes = () => {
-  const location = useLocation();
-
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={
-          <PageTransition><Index /></PageTransition>
-        } />
-        <Route path="/blog" element={
-          <PageTransition><BlogPage /></PageTransition>
-        } />
-        <Route path="/blog/:slug" element={
-          <PageTransition><BlogPostPage /></PageTransition>
-        } />
-        <Route path="/privacy-policy" element={
-          <PageTransition><PrivacyPolicy /></PageTransition>
-        } />
-        <Route path="/about" element={
-          <PageTransition><AboutUsPage /></PageTransition>
-        } />
-        <Route path="/packages" element={
-          <PageTransition><PackagesPage /></PageTransition>
-        } />
-        <Route path="/roi-calculator" element={
-          <PageTransition><ROICalculatorPage /></PageTransition>
-        } />
-        <Route path="/site-audit" element={
-          <PageTransition><SiteAuditPage /></PageTransition>
-        } />
-        <Route path="/services" element={
-          <PageTransition><ServicesPage /></PageTransition>
-        } />
-        <Route path="*" element={
-          <PageTransition><NotFound /></PageTransition>
-        } />
-      </Routes>
-    </AnimatePresence>
+    <Routes>
+      <Route path="/" element={
+        <PageTransition><Index /></PageTransition>
+      } />
+      <Route path="/blog" element={
+        <PageTransition><BlogPage /></PageTransition>
+      } />
+      <Route path="/blog/:slug" element={
+        <PageTransition><BlogPostPage /></PageTransition>
+      } />
+      <Route path="/privacy-policy" element={
+        <PageTransition><PrivacyPolicy /></PageTransition>
+      } />
+      <Route path="/about" element={
+        <PageTransition><AboutUsPage /></PageTransition>
+      } />
+      <Route path="/packages" element={
+        <PageTransition><PackagesPage /></PageTransition>
+      } />
+      <Route path="/roi-calculator" element={
+        <PageTransition><ROICalculatorPage /></PageTransition>
+      } />
+      <Route path="/site-audit" element={
+        <PageTransition><SiteAuditPage /></PageTransition>
+      } />
+      <Route path="/services" element={
+        <PageTransition><ServicesPage /></PageTransition>
+      } />
+      <Route path="*" element={
+        <PageTransition><NotFound /></PageTransition>
+      } />
+    </Routes>
   );
 };
 
