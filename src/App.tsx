@@ -2,20 +2,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import BlogPage from "./pages/BlogPage";
-import BlogPostPage from "./pages/BlogPostPage";
+import { BrowserRouter } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import AboutUsPage from "./pages/AboutUsPage";
-import PackagesPage from "./pages/PackagesPage";
-import ROICalculatorPage from "./pages/ROICalculatorPage";
-import SiteAuditPage from "./pages/SiteAuditPage";
-import ServicesPage from "./pages/ServicesPage";
 import ScrollProgress from "./components/ui/ScrollProgress";
 import CustomCursor from "./components/ui/CustomCursor";
+import LoadingScreen from "./components/ui/LoadingScreen";
+import AnimatedRoutes from "./components/ui/AnimatedRoutes";
 
 const queryClient = new QueryClient();
 
@@ -24,22 +16,12 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <LoadingScreen />
       <ScrollProgress />
       <CustomCursor />
       <BrowserRouter>
         <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/blog/:slug" element={<BlogPostPage />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/about" element={<AboutUsPage />} />
-          <Route path="/packages" element={<PackagesPage />} />
-          <Route path="/roi-calculator" element={<ROICalculatorPage />} />
-          <Route path="/site-audit" element={<SiteAuditPage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AnimatedRoutes />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
