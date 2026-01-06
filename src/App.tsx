@@ -14,6 +14,8 @@ import PackagesPage from "./pages/PackagesPage";
 import ROICalculatorPage from "./pages/ROICalculatorPage";
 import SiteAuditPage from "./pages/SiteAuditPage";
 import ServicesPage from "./pages/ServicesPage";
+import ScrollProgress from "./components/ui/ScrollProgress";
+import CustomCursor from "./components/ui/CustomCursor";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <ScrollProgress />
+      <CustomCursor />
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
