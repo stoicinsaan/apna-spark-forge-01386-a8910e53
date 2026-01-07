@@ -65,10 +65,32 @@ const Header = () => {
       : location.pathname === '/' && location.hash === item.href.split('#')[1];
 
     const linkClasses = `relative px-4 py-2 text-foreground font-medium rounded-lg
-      transition-all duration-200
-      hover:text-primary hover:bg-primary/10
-      active:scale-[0.98] active:bg-primary/20
-      ${isActive ? 'text-primary bg-primary/5' : ''}`;
+      transition-colors duration-200
+      hover:text-primary
+      active:scale-[0.98]
+      ${isActive ? 'text-primary' : ''}`;
+
+    const content = (
+      <>
+        {/* Sliding background indicator */}
+        {isActive && (
+          <motion.div
+            layoutId="navIndicator"
+            className="absolute inset-0 bg-primary/10 rounded-lg"
+            transition={{ type: "spring", stiffness: 350, damping: 30 }}
+          />
+        )}
+        {/* Sliding underline */}
+        {isActive && (
+          <motion.div
+            layoutId="navUnderline"
+            className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
+            transition={{ type: "spring", stiffness: 350, damping: 30 }}
+          />
+        )}
+        <span className="relative z-10">{item.name}</span>
+      </>
+    );
 
     if (isPageLink) {
       return (
@@ -78,14 +100,7 @@ const Header = () => {
           className={linkClasses}
           onClick={() => setIsMobileMenuOpen(false)}
         >
-          {item.name}
-          {isActive && (
-            <motion.div
-              layoutId="activeNav"
-              className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
-              transition={{ type: "spring", stiffness: 380, damping: 30 }}
-            />
-          )}
+          {content}
         </Link>
       );
     }
@@ -97,14 +112,7 @@ const Header = () => {
         className={linkClasses}
         onClick={(e) => handleSmoothScroll(e, item.href)}
       >
-        {item.name}
-        {isActive && (
-          <motion.div
-            layoutId="activeNav"
-            className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
-            transition={{ type: "spring", stiffness: 380, damping: 30 }}
-          />
-        )}
+        {content}
       </a>
     );
   };
@@ -179,7 +187,7 @@ const Header = () => {
 
           {/* Desktop Navigation - Centered */}
           <nav className="hidden lg:flex items-center justify-center flex-1 mx-4">
-            <div className="flex items-center gap-1">
+            <motion.div className="flex items-center gap-1" layout>
               {navItems.map(renderNavItem)}
               
               {/* Tools Dropdown */}
@@ -213,7 +221,7 @@ const Header = () => {
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
-            </div>
+            </motion.div>
           </nav>
 
           {/* CTA Button */}
