@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { AnimatedSection, AnimatedCard, FloatingElement } from "@/components/animations";
 import { useState } from "react";
+import ElectricBorder from "@/components/ui/ElectricBorder";
 
 const PackagesPage = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -183,31 +184,30 @@ const PackagesPage = () => {
         <section className="py-20 bg-gradient-to-b from-background via-primary/5 to-background">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto items-stretch">
-              {packages.map((pkg, index) => (
+              {packages.map((pkg, index) => {
+                // Electric animation settings: Growth = faster, others = slower
+                const electricSpeed = pkg.popular ? 2.5 : 1;
+                const electricChaos = pkg.popular ? 0.18 : 0.1;
+                const electricColor = pkg.popular ? '#00A8FF' : '#00A8FF';
+                
+                return (
                 <AnimatedCard
                   key={index}
                   index={index}
                   hoverScale={1.03}
                   className={`relative group ${pkg.popular ? 'md:-mt-4 md:mb-4' : ''}`}
                 >
-                  {/* Glowing border for popular */}
-                  {pkg.popular && (
-                    <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-                      <motion.div
-                        className="absolute inset-[-2px] bg-gradient-to-r from-primary via-secondary to-primary opacity-70 blur-md"
-                        animate={{ 
-                          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                        }}
-                        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                        style={{ backgroundSize: "200% 200%" }}
-                      />
-                    </div>
-                  )}
-                  
+                  <ElectricBorder
+                    speed={electricSpeed}
+                    chaos={electricChaos}
+                    color={electricColor}
+                    borderRadius={16}
+                    className="w-full h-full"
+                  >
                   <div className={`relative bg-gradient-to-b from-card to-card/80 border rounded-2xl p-6 lg:p-8 h-full transition-all duration-300 ${
                     pkg.popular
-                      ? "border-primary shadow-[0_0_50px_rgba(0,168,255,0.3)] z-10"
-                      : "border-border/50 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(0,168,255,0.15)]"
+                      ? "border-primary/50 z-10"
+                      : "border-border/30"
                   }`}>
                     {pkg.popular && (
                       <motion.div
@@ -325,8 +325,10 @@ const PackagesPage = () => {
                       </motion.div>
                     )}
                   </div>
+                  </ElectricBorder>
                 </AnimatedCard>
-              ))}
+              );
+              })}
             </div>
           </div>
         </section>
