@@ -64,48 +64,19 @@ const Header = () => {
       ? (item.href === '/' ? location.pathname === '/' && !location.hash : location.pathname === item.href)
       : location.pathname === '/' && location.hash === item.href.split('#')[1];
 
-    const linkClasses = `relative px-4 py-2 text-foreground font-medium transition-colors duration-200 rounded-lg
+    const linkClasses = `relative px-4 py-2 text-foreground font-medium rounded-lg
+      transition-all duration-200
       hover:text-primary hover:bg-primary/10
-      active:scale-95 active:bg-primary/20
+      active:scale-[0.98] active:bg-primary/20
       ${isActive ? 'text-primary bg-primary/5' : ''}`;
 
     if (isPageLink) {
       return (
-        <motion.div
+        <Link
           key={item.name}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          transition={{ type: "spring", stiffness: 400, damping: 17 }}
-        >
-          <Link
-            to={item.href}
-            className={linkClasses}
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            {item.name}
-            {isActive && (
-              <motion.div
-                layoutId="activeNav"
-                className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
-                transition={{ type: "spring", stiffness: 380, damping: 30 }}
-              />
-            )}
-          </Link>
-        </motion.div>
-      );
-    }
-
-    return (
-      <motion.div
-        key={item.name}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        transition={{ type: "spring", stiffness: 400, damping: 17 }}
-      >
-        <a
-          href={item.href}
+          to={item.href}
           className={linkClasses}
-          onClick={(e) => handleSmoothScroll(e, item.href)}
+          onClick={() => setIsMobileMenuOpen(false)}
         >
           {item.name}
           {isActive && (
@@ -115,8 +86,26 @@ const Header = () => {
               transition={{ type: "spring", stiffness: 380, damping: 30 }}
             />
           )}
-        </a>
-      </motion.div>
+        </Link>
+      );
+    }
+
+    return (
+      <a
+        key={item.name}
+        href={item.href}
+        className={linkClasses}
+        onClick={(e) => handleSmoothScroll(e, item.href)}
+      >
+        {item.name}
+        {isActive && (
+          <motion.div
+            layoutId="activeNav"
+            className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
+            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+          />
+        )}
+      </a>
     );
   };
 
@@ -190,29 +179,23 @@ const Header = () => {
 
           {/* Desktop Navigation - Centered */}
           <nav className="hidden lg:flex items-center justify-center flex-1 mx-4">
-            <div className="flex items-center space-x-6 xl:space-x-8">
+            <div className="flex items-center gap-1">
               {navItems.map(renderNavItem)}
               
               {/* Tools Dropdown */}
               <DropdownMenu>
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                >
-                  <DropdownMenuTrigger className={`flex items-center gap-1.5 px-4 py-2 text-foreground font-medium rounded-lg outline-none
-                    transition-colors duration-200
-                    hover:text-primary hover:bg-primary/10
-                    active:bg-primary/20
-                    ${location.pathname === '/roi-calculator' || location.pathname === '/site-audit' 
-                      ? 'text-primary bg-primary/5' 
-                      : ''
-                    }`}>
-                    <Wrench className="w-4 h-4" />
-                    Tools
-                    <ChevronDown className="w-3 h-3" />
-                  </DropdownMenuTrigger>
-                </motion.div>
+                <DropdownMenuTrigger className={`flex items-center gap-1.5 px-4 py-2 text-foreground font-medium rounded-lg outline-none
+                  transition-all duration-200
+                  hover:text-primary hover:bg-primary/10
+                  active:scale-[0.98] active:bg-primary/20
+                  ${location.pathname === '/roi-calculator' || location.pathname === '/site-audit' 
+                    ? 'text-primary bg-primary/5' 
+                    : ''
+                  }`}>
+                  <Wrench className="w-4 h-4" />
+                  Tools
+                  <ChevronDown className="w-3 h-3" />
+                </DropdownMenuTrigger>
                 <DropdownMenuContent 
                   className="bg-background/95 backdrop-blur-lg border-border/50 shadow-lg shadow-primary/10 p-1"
                   align="center"
