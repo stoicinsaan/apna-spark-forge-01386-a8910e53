@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Home, Briefcase, Package, BookOpen, Users, Phone, Wrench, Calculator, Search, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -63,71 +64,112 @@ const Header = () => {
       ? (item.href === '/' ? location.pathname === '/' && !location.hash : location.pathname === item.href)
       : location.pathname === '/' && location.hash === item.href.split('#')[1];
 
+    const linkClasses = `relative px-4 py-2 text-foreground font-medium transition-colors duration-200 rounded-lg
+      hover:text-primary hover:bg-primary/10
+      active:scale-95 active:bg-primary/20
+      ${isActive ? 'text-primary bg-primary/5' : ''}`;
+
     if (isPageLink) {
       return (
-        <Link
+        <motion.div
           key={item.name}
-          to={item.href}
-          className={`text-foreground hover:text-primary transition-all duration-300 font-medium relative pb-1 ${
-            isActive ? 'text-primary after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:shadow-glow' : ''
-          }`}
-          onClick={() => setIsMobileMenuOpen(false)}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
         >
-          {item.name}
-        </Link>
+          <Link
+            to={item.href}
+            className={linkClasses}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            {item.name}
+            {isActive && (
+              <motion.div
+                layoutId="activeNav"
+                className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
+                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+              />
+            )}
+          </Link>
+        </motion.div>
       );
     }
 
     return (
-      <a
+      <motion.div
         key={item.name}
-        href={item.href}
-        className={`text-foreground hover:text-primary transition-all duration-300 font-medium relative pb-1 ${
-          isActive ? 'text-primary after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:shadow-glow' : ''
-        }`}
-        onClick={(e) => handleSmoothScroll(e, item.href)}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ type: "spring", stiffness: 400, damping: 17 }}
       >
-        {item.name}
-      </a>
+        <a
+          href={item.href}
+          className={linkClasses}
+          onClick={(e) => handleSmoothScroll(e, item.href)}
+        >
+          {item.name}
+          {isActive && (
+            <motion.div
+              layoutId="activeNav"
+              className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary rounded-full"
+              transition={{ type: "spring", stiffness: 380, damping: 30 }}
+            />
+          )}
+        </a>
+      </motion.div>
     );
   };
 
   // --- Helper for Mobile Nav (links inside the Sheet) ---
-  const renderMobileNavItem = (item: { name: string, href: string, icon: any }) => {
+  const renderMobileNavItem = (item: { name: string, href: string, icon: any }, index: number) => {
     const isPageLink = item.href === '/blog' || item.href === '/about' || item.href === '/packages' || item.href === '/' || item.href === '/services';
     const isActive = isPageLink 
       ? (item.href === '/' ? location.pathname === '/' && !location.hash : location.pathname === item.href)
       : location.pathname === '/' && location.hash === item.href.split('#')[1];
     const Icon = item.icon;
 
+    const mobileClasses = `flex items-center gap-3 text-foreground font-medium py-4 px-3 text-base rounded-lg
+      transition-all duration-200
+      hover:text-primary hover:bg-primary/10
+      active:scale-[0.98] active:bg-primary/20
+      ${isActive ? 'text-primary bg-primary/5' : ''}`;
+
     if (isPageLink) {
       return (
-        <Link
+        <motion.div
           key={item.name}
-          to={item.href}
-          className={`flex items-center gap-3 text-foreground hover:text-primary transition-all duration-300 font-medium py-3 text-base border-b border-border/30 ${
-            isActive ? 'text-primary' : ''
-          }`}
-          onClick={() => setIsMobileMenuOpen(false)}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: index * 0.05, duration: 0.2 }}
         >
-          <Icon className="w-4 h-4 flex-shrink-0" />
-          <span>{item.name}</span>
-        </Link>
+          <Link
+            to={item.href}
+            className={mobileClasses}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <Icon className="w-5 h-5 flex-shrink-0" />
+            <span>{item.name}</span>
+          </Link>
+        </motion.div>
       );
     }
 
     return (
-      <a
+      <motion.div
         key={item.name}
-        href={item.href}
-        className={`flex items-center gap-3 text-foreground hover:text-primary transition-all duration-300 font-medium py-3 text-base border-b border-border/30 ${
-          isActive ? 'text-primary' : ''
-        }`}
-        onClick={(e) => handleSmoothScroll(e, item.href)}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: index * 0.05, duration: 0.2 }}
       >
-        <Icon className="w-4 h-4 flex-shrink-0" />
-        <span>{item.name}</span>
-      </a>
+        <a
+          href={item.href}
+          className={mobileClasses}
+          onClick={(e) => handleSmoothScroll(e, item.href)}
+        >
+          <Icon className="w-5 h-5 flex-shrink-0" />
+          <span>{item.name}</span>
+        </a>
+      </motion.div>
     );
   };
 
@@ -153,24 +195,33 @@ const Header = () => {
               
               {/* Tools Dropdown */}
               <DropdownMenu>
-                <DropdownMenuTrigger className={`flex items-center gap-1 text-foreground hover:text-primary transition-all duration-300 font-medium relative pb-1 outline-none ${
-                  location.pathname === '/roi-calculator' || location.pathname === '/site-audit' 
-                    ? 'text-primary after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary after:shadow-glow' 
-                    : ''
-                }`}>
-                  <Wrench className="w-4 h-4" />
-                  Tools
-                  <ChevronDown className="w-3 h-3" />
-                </DropdownMenuTrigger>
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  <DropdownMenuTrigger className={`flex items-center gap-1.5 px-4 py-2 text-foreground font-medium rounded-lg outline-none
+                    transition-colors duration-200
+                    hover:text-primary hover:bg-primary/10
+                    active:bg-primary/20
+                    ${location.pathname === '/roi-calculator' || location.pathname === '/site-audit' 
+                      ? 'text-primary bg-primary/5' 
+                      : ''
+                    }`}>
+                    <Wrench className="w-4 h-4" />
+                    Tools
+                    <ChevronDown className="w-3 h-3" />
+                  </DropdownMenuTrigger>
+                </motion.div>
                 <DropdownMenuContent 
-                  className="bg-background/95 backdrop-blur-lg border-border/50 shadow-lg shadow-primary/10"
+                  className="bg-background/95 backdrop-blur-lg border-border/50 shadow-lg shadow-primary/10 p-1"
                   align="center"
                 >
                   {toolsItems.map((item) => (
-                    <DropdownMenuItem key={item.name} asChild>
+                    <DropdownMenuItem key={item.name} asChild className="rounded-md px-3 py-2.5 cursor-pointer">
                       <Link 
                         to={item.href} 
-                        className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors"
+                        className="flex items-center gap-2 hover:text-primary transition-colors"
                       >
                         <item.icon className="w-4 h-4 text-primary" />
                         {item.name}
@@ -219,8 +270,8 @@ const Header = () => {
                   </div>
                   
                   {/* Nav items inside menu */}
-                  <nav className="flex flex-col flex-1 overflow-y-auto">
-                    {navItems.map(renderMobileNavItem)}
+                  <nav className="flex flex-col flex-1 overflow-y-auto space-y-1">
+                    {navItems.map((item, index) => renderMobileNavItem(item, index))}
                     
                     {/* Tools Section */}
                     <div className="py-3 border-b border-border/30">
