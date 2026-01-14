@@ -2,10 +2,39 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, MapPin } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { AnimatedSection } from "./animations";
+import { z } from "zod";
+
+// Validation schema for contact form
+const contactFormSchema = z.object({
+  name: z.string()
+    .trim()
+    .min(2, "Name must be at least 2 characters")
+    .max(100, "Name must be less than 100 characters"),
+  email: z.string()
+    .trim()
+    .email("Please enter a valid email address")
+    .max(254, "Email must be less than 254 characters"),
+  phone: z.string()
+    .trim()
+    .regex(/^[0-9+\-\s()]{6,20}$/, "Please enter a valid phone number")
+    .max(20, "Phone number is too long"),
+  service: z.string()
+    .trim()
+    .max(200, "Service field is too long")
+    .optional()
+    .or(z.literal("")),
+  message: z.string()
+    .trim()
+    .max(2000, "Message must be less than 2000 characters")
+    .optional()
+    .or(z.literal("")),
+});
+
+const RATE_LIMIT_MS = 5000; // 5 seconds between submissions
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -16,10 +45,28 @@ const Contact = () => {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const lastSubmitTimeRef = useRef<number>(0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Rate limiting check
+    const now = Date.now();
+    if (now - lastSubmitTimeRef.current < RATE_LIMIT_MS) {
+      toast.error("Please wait a few seconds before submitting again.");
+      return;
+    }
+
+    // Validate form data
+    const validationResult = contactFormSchema.safeParse(formData);
+    if (!validationResult.success) {
+      const firstError = validationResult.error.errors[0];
+      toast.error(firstError?.message || "Please check your input and try again.");
+      return;
+    }
+
     setIsSubmitting(true);
+    lastSubmitTimeRef.current = now;
 
     try {
       const response = await fetch("https://formspree.io/f/meopbzzo", {
@@ -28,7 +75,7 @@ const Contact = () => {
           "Content-Type": "application/json",
           "Accept": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(validationResult.data),
       });
 
       if (response.ok) {
