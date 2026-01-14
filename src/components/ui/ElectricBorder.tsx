@@ -1,30 +1,72 @@
-import React, { useEffect, useRef, useCallback, CSSProperties, ReactNode } from 'react';
+import React, { useEffect, useRef, useCallback, CSSProperties, ReactNode, useState } from 'react';
 import './ElectricBorder.css';
+
+// Theme-matching color presets
+const COLOR_PRESETS = {
+  blue: '#00A8FF',
+  cyan: '#00D4FF',
+  purple: '#8B5CF6',
+  indigo: '#6366F1',
+  teal: '#14B8A6',
+} as const;
 
 interface ElectricBorderProps {
   children?: ReactNode;
   color?: string;
+  colorPreset?: keyof typeof COLOR_PRESETS;
   speed?: number;
   chaos?: number;
   borderRadius?: number;
   className?: string;
   style?: CSSProperties;
+  hoverOnly?: boolean;
 }
 
 const ElectricBorder: React.FC<ElectricBorderProps> = ({
   children,
-  color = '#00A8FF',
+  color,
+  colorPreset = 'blue',
   speed = 1,
   chaos = 0.12,
   borderRadius = 24,
   className,
-  style
+  style,
+  hoverOnly = true
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number | null>(null);
   const timeRef = useRef(0);
   const lastFrameTimeRef = useRef(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [opacity, setOpacity] = useState(hoverOnly ? 0 : 1);
+
+  // Use custom color or preset
+  const activeColor = color || COLOR_PRESETS[colorPreset];
+
+  // Smooth opacity transition
+  useEffect(() => {
+    if (!hoverOnly) {
+      setOpacity(1);
+      return;
+    }
+    
+    let animationId: number;
+    const targetOpacity = isHovered ? 1 : 0;
+    const step = 0.08;
+    
+    const animate = () => {
+      setOpacity(prev => {
+        const diff = targetOpacity - prev;
+        if (Math.abs(diff) < step) return targetOpacity;
+        return prev + (diff > 0 ? step : -step);
+      });
+      animationId = requestAnimationFrame(animate);
+    };
+    
+    animationId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationId);
+  }, [isHovered, hoverOnly]);
 
   const random = useCallback((x: number): number => {
     return (Math.sin(x * 12.9898) * 43758.5453) % 1;
@@ -197,8 +239,8 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.scale(dpr, dpr);
 
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = activeColor;
+      ctx.lineWidth = 1.5;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
 
@@ -271,19 +313,26 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
       }
       resizeObserver.disconnect();
     };
-  }, [color, speed, chaos, borderRadius, octavedNoise, getRoundedRectPoint]);
+  }, [activeColor, speed, chaos, borderRadius, octavedNoise, getRoundedRectPoint]);
 
   const vars = {
-    '--electric-border-color': color,
+    '--electric-border-color': activeColor,
+    '--electric-opacity': opacity,
     borderRadius
   } as CSSProperties;
 
   return (
-    <div ref={containerRef} className={`electric-border ${className ?? ''}`} style={{ ...vars, ...style }}>
-      <div className="eb-canvas-container">
+    <div 
+      ref={containerRef} 
+      className={`electric-border ${className ?? ''}`} 
+      style={{ ...vars, ...style }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="eb-canvas-container" style={{ opacity }}>
         <canvas ref={canvasRef} className="eb-canvas" />
       </div>
-      <div className="eb-layers">
+      <div className="eb-layers" style={{ opacity }}>
         <div className="eb-glow-1" />
         <div className="eb-glow-2" />
         <div className="eb-background-glow" />
