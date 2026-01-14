@@ -5,7 +5,6 @@ import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { AnimatedSection, AnimatedCard, FloatingElement } from "@/components/animations";
 import { useState } from "react";
-import ElectricBorder from "@/components/ui/ElectricBorder";
 
 const PackagesPage = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -184,32 +183,17 @@ const PackagesPage = () => {
         <section className="py-20 bg-gradient-to-b from-background via-primary/5 to-background">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto items-stretch">
-            {packages.map((pkg, index) => {
-                // Electric animation settings: Growth = faster & more intense, others = subtle
-                const electricSpeed = pkg.popular ? 2.2 : 1.2;
-                const electricChaos = pkg.popular ? 0.15 : 0.08;
-                // Theme-matching colors: cyan for Growth, blue for Starter, purple for Business Pro
-                const colorPreset = pkg.popular ? 'cyan' : (index === 0 ? 'blue' : 'purple');
-                
-                return (
+            {packages.map((pkg, index) => (
                 <AnimatedCard
                   key={index}
                   index={index}
                   hoverScale={1.02}
                   className={`relative group ${pkg.popular ? 'md:-mt-4 md:mb-4' : ''}`}
                 >
-                  <ElectricBorder
-                    speed={electricSpeed}
-                    chaos={electricChaos}
-                    colorPreset={colorPreset}
-                    borderRadius={16}
-                    className="w-full h-full"
-                    hoverOnly={true}
-                  >
                   <div className={`relative bg-gradient-to-b from-card to-card/80 border rounded-2xl p-6 lg:p-8 h-full transition-all duration-300 ${
                     pkg.popular
-                      ? "border-primary/50 z-10"
-                      : "border-border/30"
+                      ? "border-primary/50 shadow-lg shadow-primary/20 z-10"
+                      : "border-border/30 hover:border-primary/30"
                   }`}>
                     {pkg.popular && (
                       <motion.div
@@ -327,10 +311,8 @@ const PackagesPage = () => {
                       </motion.div>
                     )}
                   </div>
-                  </ElectricBorder>
                 </AnimatedCard>
-              );
-              })}
+              ))}
             </div>
           </div>
         </section>
