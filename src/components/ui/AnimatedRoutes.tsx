@@ -4,6 +4,9 @@ import NotFound from "@/pages/NotFound";
 import BlogPage from "@/pages/BlogPage";
 import BlogPostPage from "@/pages/BlogPostPage";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
+import TermsConditions from "@/pages/TermsConditions";
+import RefundPolicy from "@/pages/RefundPolicy";
+import ContactPage from "@/pages/ContactPage";
 import AboutUsPage from "@/pages/AboutUsPage";
 import PackagesPage from "@/pages/PackagesPage";
 import ROICalculatorPage from "@/pages/ROICalculatorPage";
@@ -25,6 +28,15 @@ const AnimatedRoutes = () => {
       } />
       <Route path="/privacy-policy" element={
         <PageTransition><PrivacyPolicy /></PageTransition>
+      } />
+      <Route path="/terms-conditions" element={
+        <PageTransition><TermsConditions /></PageTransition>
+      } />
+      <Route path="/refund-policy" element={
+        <PageTransition><RefundPolicy /></PageTransition>
+      } />
+      <Route path="/contact" element={
+        <PageTransition><ContactPage /></PageTransition>
       } />
       <Route path="/about" element={
         <PageTransition><AboutUsPage /></PageTransition>
