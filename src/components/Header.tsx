@@ -65,7 +65,7 @@ const Header = () => {
       : location.pathname === '/' && location.hash === item.href.split('#')[1];
 
     const linkClasses = `relative px-4 py-2 text-foreground font-medium rounded-lg
-      transition-colors duration-200
+      transition-colors duration-200 outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-0
       hover:text-primary
       active:scale-[0.98]
       ${isActive ? 'text-primary' : ''}`;
@@ -126,7 +126,7 @@ const Header = () => {
     const Icon = item.icon;
 
     const mobileClasses = `flex items-center gap-3 text-foreground font-medium py-4 px-3 text-base rounded-lg
-      transition-all duration-200
+      transition-all duration-200 outline-none focus:outline-none focus-visible:outline-none focus-visible:ring-0
       hover:text-primary hover:bg-primary/10
       active:scale-[0.98] active:bg-primary/20
       ${isActive ? 'text-primary bg-primary/5' : ''}`;
