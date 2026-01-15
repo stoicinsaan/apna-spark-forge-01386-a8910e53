@@ -1,7 +1,55 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Youtube } from "lucide-react";
 import { motion } from "framer-motion";
-import { FloatingElement } from "./animations";
+
+// Marketing keywords for the matrix effect
+const marketingKeywords = [
+  ["SEO", "GROWTH", "LEADS", "ADS", "ROI", "PPC", "SOCIAL", "WEB", "DESIGN", "BRAND"],
+  ["STRATEGY", "CONTENT", "ANALYTICS", "CRO", "EMAIL", "FUNNEL", "CLICKS", "REACH", "VIRAL", "TRAFFIC"],
+  ["DIGITAL", "MARKETING", "CREATIVE", "DATA", "SCALE", "CONVERT", "ENGAGE", "BOOST", "OPTIMIZE", "TARGET"],
+  ["REVENUE", "RESULTS", "CAMPAIGN", "LAUNCH", "SUCCESS", "PROFIT", "VISION", "IMPACT", "GOALS", "METRICS"],
+];
+
+// Single scrolling column component
+const MatrixColumn = ({ 
+  keywords, 
+  direction = "down", 
+  duration = 25,
+  className = ""
+}: { 
+  keywords: string[]; 
+  direction?: "up" | "down"; 
+  duration?: number;
+  className?: string;
+}) => {
+  // Triple the keywords for seamless loop
+  const extendedKeywords = [...keywords, ...keywords, ...keywords];
+  
+  return (
+    <div className={`flex flex-col overflow-hidden h-full ${className}`}>
+      <motion.div
+        className="flex flex-col gap-8"
+        initial={{ y: direction === "down" ? "-33.33%" : "0%" }}
+        animate={{ y: direction === "down" ? "0%" : "-33.33%" }}
+        transition={{
+          duration,
+          repeat: Infinity,
+          ease: "linear",
+          repeatType: "loop",
+        }}
+      >
+        {extendedKeywords.map((keyword, index) => (
+          <span
+            key={`${keyword}-${index}`}
+            className="text-6xl md:text-7xl lg:text-8xl font-black text-foreground/[0.03] select-none whitespace-nowrap"
+          >
+            {keyword}
+          </span>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
 
 const Hero = () => {
   const containerVariants = {
@@ -41,36 +89,22 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(0,168,255,0.1),transparent_50%)]" />
-        <FloatingElement className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full filter blur-[100px]" duration={4} distance={20} />
-        <FloatingElement className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full filter blur-[120px]" duration={5} distance={25} />
-        <FloatingElement className="absolute top-1/2 left-1/3 w-48 h-48 bg-primary/10 rounded-full filter blur-[80px]" duration={6} distance={15} />
-      </div>
-
-      {/* Animated particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-primary/30 rounded-full"
-            initial={{
-              x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1000),
-              y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 1000),
-            }}
-            animate={{
-              y: [null, -100],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-              ease: "linear",
-            }}
-          />
-        ))}
+      {/* Digital Marketing Matrix Background */}
+      <div className="absolute inset-0 bg-background">
+        {/* Matrix columns container */}
+        <div className="absolute inset-0 flex justify-around pointer-events-none overflow-hidden">
+          <MatrixColumn keywords={marketingKeywords[0]} direction="down" duration={30} />
+          <MatrixColumn keywords={marketingKeywords[1]} direction="up" duration={25} />
+          <MatrixColumn keywords={marketingKeywords[2]} direction="down" duration={35} />
+          <MatrixColumn keywords={marketingKeywords[3]} direction="up" duration={28} />
+        </div>
+        
+        {/* Gradient overlays for fade effect */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 pointer-events-none" />
+        
+        {/* Subtle center glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,hsl(var(--background))_70%)] pointer-events-none" />
       </div>
 
       {/* Content */}
