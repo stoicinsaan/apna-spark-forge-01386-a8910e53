@@ -192,8 +192,8 @@ const Header = () => {
               
               {/* Tools Dropdown */}
               <DropdownMenu>
-                <DropdownMenuTrigger className={`flex items-center gap-1.5 px-4 py-2 text-foreground font-medium rounded-lg outline-none
-                  transition-all duration-200
+                <DropdownMenuTrigger className={`flex items-center gap-1.5 px-4 py-2 text-foreground font-medium rounded-lg
+                  transition-all duration-200 outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 border-none
                   hover:text-primary hover:bg-primary/10
                   active:scale-[0.98] active:bg-primary/20
                   ${location.pathname === '/roi-calculator' || location.pathname === '/site-audit' 
